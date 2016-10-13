@@ -44,8 +44,8 @@ public class MeasureContract {
         public static final String TABLE_NAME = "projects";
 
         public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_START = "start";
-        public static final String COLUMN_END   = "end";
+        public static final String COLUMN_START_DATE = "start_date";
+        public static final String COLUMN_END_DATE   = "end_date";
 
 
         public static final Uri CONTENT_URI =
@@ -88,6 +88,15 @@ public class MeasureContract {
 
         public static Uri buildMeasureUserProject(String userId, String projectId) {
             return CONTENT_URI.buildUpon().appendPath(userId).appendPath(projectId).build();
+        }
+
+
+        public static String getUserFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getProjectFromUri(Uri uri) {
+            return uri.getPathSegments().get(2);
         }
 
 

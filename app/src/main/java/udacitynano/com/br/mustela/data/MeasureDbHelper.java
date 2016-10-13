@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import udacitynano.com.br.mustela.model.Project;
+import udacitynano.com.br.mustela.model.User;
+
 public class MeasureDbHelper extends SQLiteOpenHelper {
 
+    private Context mContext;
 
     private static final int DATABASE_VERSION = 1;
 
@@ -14,6 +18,7 @@ public class MeasureDbHelper extends SQLiteOpenHelper {
 
     public MeasureDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -22,16 +27,16 @@ public class MeasureDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + MeasureContract.UserEntry.TABLE_NAME + " (" +
                 MeasureContract.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MeasureContract.UserEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                MeasureContract.UserEntry.COLUMN_HIGH + " TEXT NOT NULL, " +
-                MeasureContract.UserEntry.COLUMN_AGE + " INTEGER NOT NULL, " +
+                MeasureContract.UserEntry.COLUMN_HIGH + " REAL NOT NULL, " +
+                MeasureContract.UserEntry.COLUMN_AGE + " INTEGER NOT NULL " +
                 " );";
 
 
         final String SQL_CREATE_PROJECT_TABLE = "CREATE TABLE " + MeasureContract.ProjectEntry.TABLE_NAME + " (" +
                 MeasureContract.ProjectEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MeasureContract.ProjectEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                MeasureContract.ProjectEntry.COLUMN_START + " TEXT NOT NULL, " +
-                MeasureContract.ProjectEntry.COLUMN_END + " TEXT NOT NULL, " +
+                MeasureContract.ProjectEntry.COLUMN_START_DATE + " TEXT NOT NULL, " +
+                MeasureContract.ProjectEntry.COLUMN_END_DATE + " TEXT NOT NULL " +
                 " );";
 
 
@@ -54,6 +59,14 @@ public class MeasureDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_MEASURE_TABLE);
 
+        //Insert project and user (prototype only)
+        User user = new User("Susana",1.73,34);
+        User user1 = new User("Marcelo",1.74,42);
+        user.addUser(mContext);
+        user1.addUser(mContext);
+
+        Project project = new Project("Operation Raul","2016-10-10","2016-12-25");
+        project.addProject(mContext);
 
     }
 
