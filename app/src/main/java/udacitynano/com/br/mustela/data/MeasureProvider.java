@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 public class MeasureProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private MeasureDbHelper mOpenHelper;
+    private   MeasureDbHelper mOpenHelper;
+    private static SQLiteDatabase sqLiteDatabase;
 
     static final int USER = 100;
     static final int PROJECT = 101;
@@ -58,7 +60,8 @@ public class MeasureProvider extends ContentProvider {
         selection = sMeasureUserProjectSelection;
         selectionArgs = new String[]{user,project};
 
-        return sMeasureByProjectUserQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+
+        Cursor cursor = sMeasureByProjectUserQueryBuilder.query(sqLiteDatabase,
                 projection,
                 selection,
                 selectionArgs,
@@ -66,31 +69,46 @@ public class MeasureProvider extends ContentProvider {
                 null,
                 sortOrder
         );
+
+        return cursor;
     }
 
-    private Cursor getUsers(String[] projection, String sortOrder) {
+    private Cursor getUsers(String[] projection, String selection,
+                            String[] selectionArgs,String sortOrder) {
 
-        return sUsersQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+
+
+        Cursor userCursor = sUsersQueryBuilder.query(sqLiteDatabase,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 sortOrder
         );
+
+        Log.e("Debug","Debug10 first result "+ userCursor.getCount());
+
+        return userCursor;
     }
 
 
-    private Cursor getProjects(String[] projection, String sortOrder) {
+    private Cursor getProjects(String[] projection, String selection,
+                               String[] selectionArgs,String sortOrder) {
 
-        return sProjectsQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+
+
+        Cursor cursor = sProjectsQueryBuilder.query(sqLiteDatabase,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 sortOrder
         );
+
+
+        return cursor;
     }
 
 
@@ -113,24 +131,24 @@ public class MeasureProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
 
         if ( null == selection ) selection = "1";
         switch (match) {
             case MEASURE_BY_USER_PROJECT:
-                rowsDeleted = db.delete(
+                rowsDeleted = sqLiteDatabase.delete(
                         MeasureContract.MeasureEntry.TABLE_NAME, selection, selectionArgs);
                 break;
 
             case USER:
-                rowsDeleted = db.delete(
+                rowsDeleted = sqLiteDatabase.delete(
                         MeasureContract.UserEntry.TABLE_NAME, selection, selectionArgs);
                 break;
 
             case PROJECT:
-                rowsDeleted = db.delete(
+                rowsDeleted = sqLiteDatabase.delete(
                         MeasureContract.ProjectEntry.TABLE_NAME, selection, selectionArgs);
                 break;
 
@@ -152,7 +170,7 @@ public class MeasureProvider extends ContentProvider {
             switch (match) {
 
                 case USER:
-                    return MeasureContract.UserEntry.CONTENT_ITEM_TYPE;
+                    return MeasureContract.UserEntry.CONTENT_TYPE;
 
                 case PROJECT:
                     return MeasureContract.ProjectEntry.CONTENT_ITEM_TYPE;
@@ -166,7 +184,7 @@ public class MeasureProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
 
@@ -174,7 +192,7 @@ public class MeasureProvider extends ContentProvider {
 
             case USER: {
                 //normalizeDate(values);
-                long _id = db.insert(MeasureContract.UserEntry.TABLE_NAME, null, values);
+                long _id = sqLiteDatabase.insert(MeasureContract.UserEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = MeasureContract.UserEntry.buildUserUri(_id);
                 else
@@ -184,7 +202,7 @@ public class MeasureProvider extends ContentProvider {
 
             case PROJECT: {
                 //normalizeDate(values);
-                long _id = db.insert(MeasureContract.ProjectEntry.TABLE_NAME, null, values);
+                long _id = sqLiteDatabase.insert(MeasureContract.ProjectEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = MeasureContract.ProjectEntry.buildProjectUri(_id);
                 else
@@ -194,7 +212,7 @@ public class MeasureProvider extends ContentProvider {
 
             case MEASURE_BY_USER_PROJECT: {
                 //normalizeDate(values);
-                long _id = db.insert(MeasureContract.MeasureEntry.TABLE_NAME, null, values);
+                long _id = sqLiteDatabase.insert(MeasureContract.MeasureEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = MeasureContract.MeasureEntry.buildMeasureUri(_id);
                 else
@@ -212,6 +230,9 @@ public class MeasureProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = new MeasureDbHelper(getContext());
+        if(sqLiteDatabase == null) {
+            sqLiteDatabase = mOpenHelper.getWritableDatabase();
+        }
         return true;
     }
 
@@ -223,12 +244,15 @@ public class MeasureProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
 
             case USER: {
-                retCursor = getUsers(projection, sortOrder);
+                Log.e("Debug","Debug07 "+projection.toString());
+
+                retCursor = getUsers(projection, selection, selectionArgs, sortOrder);
+                Log.e("Debug","Debug08 "+retCursor.getCount());
                 break;
             }
 
             case PROJECT: {
-                retCursor = getProjects(projection, sortOrder);
+                retCursor = getProjects(projection, selection, selectionArgs,sortOrder);
                 break;
             }
 
@@ -248,7 +272,7 @@ public class MeasureProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         final int match = sUriMatcher.match(uri);
         int rowsUpdated;
 
@@ -256,20 +280,20 @@ public class MeasureProvider extends ContentProvider {
 
             case USER:
                 //normalizeDate(values);
-                rowsUpdated = db.update(MeasureContract.UserEntry.TABLE_NAME, values, selection,
+                rowsUpdated = sqLiteDatabase.update(MeasureContract.UserEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
 
             case PROJECT:
                 //normalizeDate(values);
-                rowsUpdated = db.update(MeasureContract.ProjectEntry.TABLE_NAME, values, selection,
+                rowsUpdated = sqLiteDatabase.update(MeasureContract.ProjectEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
 
 
             case MEASURE_BY_USER_PROJECT:
                 //normalizeDate(values);
-                rowsUpdated = db.update(MeasureContract.MeasureEntry.TABLE_NAME, values, selection,
+                rowsUpdated = sqLiteDatabase.update(MeasureContract.MeasureEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
 
@@ -279,72 +303,76 @@ public class MeasureProvider extends ContentProvider {
         if (rowsUpdated != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
+
         return rowsUpdated;
     }
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         final int match = sUriMatcher.match(uri);
         int returnCount = 0;
         switch (match) {
 
 
             case USER:
-                db.beginTransaction();
+                sqLiteDatabase.beginTransaction();
 
                 try {
                     for (ContentValues value : values) {
                         //normalizeDate(value);
-                        long _id = db.insert(MeasureContract.UserEntry.TABLE_NAME, null, value);
+                        long _id = sqLiteDatabase.insert(MeasureContract.UserEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
                         }
                     }
-                    db.setTransactionSuccessful();
+                    sqLiteDatabase.setTransactionSuccessful();
                 } finally {
-                    db.endTransaction();
+                    sqLiteDatabase.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
+
                 return returnCount;
 
 
 
             case PROJECT:
-                db.beginTransaction();
+                sqLiteDatabase.beginTransaction();
 
                 try {
                     for (ContentValues value : values) {
                         //normalizeDate(value);
-                        long _id = db.insert(MeasureContract.ProjectEntry.TABLE_NAME, null, value);
+                        long _id = sqLiteDatabase.insert(MeasureContract.ProjectEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
                         }
                     }
-                    db.setTransactionSuccessful();
+                    sqLiteDatabase.setTransactionSuccessful();
                 } finally {
-                    db.endTransaction();
+                    sqLiteDatabase.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
+
                 return returnCount;
 
 
             case MEASURE_BY_USER_PROJECT:
-                db.beginTransaction();
+                sqLiteDatabase.beginTransaction();
 
                 try {
                     for (ContentValues value : values) {
                         //normalizeDate(value);
-                        long _id = db.insert(MeasureContract.MeasureEntry.TABLE_NAME, null, value);
+                        long _id = sqLiteDatabase.insert(MeasureContract.MeasureEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
                         }
                     }
-                    db.setTransactionSuccessful();
+                    sqLiteDatabase.setTransactionSuccessful();
                 } finally {
-                    db.endTransaction();
+                    sqLiteDatabase.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
+
                 return returnCount;
             default:
                 return super.bulkInsert(uri, values);

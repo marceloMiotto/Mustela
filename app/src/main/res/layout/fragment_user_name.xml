@@ -1,14 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/lbl_your_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter user name" />
+        android:text="Peso:" />
 
     <EditText
         android:id="@+id/username"
@@ -16,4 +18,45 @@
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
         android:inputType="text" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+
+    <TextView
+        android:id="@+id/lbl_percentual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Peso:" />
+
+    <EditText
+        android:id="@+id/percentual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:id="@+id/calendarView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.35" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        tools:text="Save"
+        android:id="@+id/button_save"
+        android:layout_gravity="center_horizontal" />
+
+
 </LinearLayout>

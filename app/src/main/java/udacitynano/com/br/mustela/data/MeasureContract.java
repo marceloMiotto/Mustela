@@ -24,6 +24,7 @@ public class MeasureContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_HIGH = "high";
         public static final String COLUMN_AGE  = "age";
+        public static final String COLUMN_PHOTO_PATH  = "photo_pat";
 
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();

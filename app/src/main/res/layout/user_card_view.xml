@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/imageView_user_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/imageView_photo_heigh"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
@@ -26,25 +26,11 @@
 
 
         <TextView
-            android:id="@+id/textView_label_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/margin_top"
-            android:padding="5dp"
-            android:text="@string/label_user_name"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_size_medium"
-
-            />
-
-        <TextView
             android:id="@+id/textView_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/margin_top"
-            android:layout_toRightOf="@id/textView_label_user_name"
+            android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_medium"

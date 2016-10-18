@@ -3,18 +3,22 @@ package udacitynano.com.br.mustela.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import udacitynano.com.br.mustela.R;
+import udacitynano.com.br.mustela.adapter.UserAdapter;
+import udacitynano.com.br.mustela.model.Project;
+import udacitynano.com.br.mustela.model.User;
 
-public class MainActivityFragment extends Fragment implements MyDialogFragment.UserNameListener,View.OnClickListener {
+public class MainActivityFragment extends Fragment {
 
-
+    private RecyclerView.Adapter mAdapter;
     Button mDialogFragment;
 
     public MainActivityFragment() {
@@ -26,34 +30,33 @@ public class MainActivityFragment extends Fragment implements MyDialogFragment.U
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mDialogFragment = (Button) view.findViewById(R.id.showCustomFragment);
-        mDialogFragment.setOnClickListener(this);
+
+        //Create the database
+        Log.e("Debug", "Debug01");
+
+        //Insert project and user (prototype only)
+        User user = new User("Susana", 1.73, 34, "");
+        User user1 = new User("Marcelo", 1.74, 42, "");
+        user.addUser(getActivity());
+        user1.addUser(getActivity());
+
+        Project project = new Project("Operation Raul", "2016-10-10", "2016-12-25");
+        project.addProject(getActivity());
+
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.recyclerView_users);
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv.setHasFixedSize(true);
+        User usr = new User(getActivity());
+        mAdapter = new UserAdapter(getActivity(), usr.getUsers());
+        rv.setAdapter(mAdapter);
+
 
         return view;
     }
 
-    @Override
-    public void onFinishUserDialog(String user) {
-        Toast.makeText(getActivity(), "Hello, " + user, Toast.LENGTH_SHORT).show();
-    }
 
-    public void onClick(View view) {
-        // close existing dialog fragments
-        FragmentManager manager = getFragmentManager();
-        Fragment frag = manager.findFragmentByTag("fragment_edit_name");
-        if (frag != null) {
-            manager.beginTransaction().remove(frag).commit();
-        }
-        switch (view.getId()) {
-            case R.id.showCustomFragment:
-                MyDialogFragment editNameDialog = new MyDialogFragment();
-                editNameDialog.show(manager, "fragment_edit_name");
-                break;
-
-        }
-    }
 }
 
 

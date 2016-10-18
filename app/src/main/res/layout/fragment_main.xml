@@ -6,15 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/showCustomFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick" />
-
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_users"
+        android:id="@+id/recyclerView_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_top"

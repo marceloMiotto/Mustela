@@ -34,10 +34,7 @@ public class MyDialogFragment extends DialogFragment implements TextView.OnEdito
         // set this instance as callback for editor action
         mEditText.setOnEditorActionListener(this);
         mEditText.requestFocus();
-       /*
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                */
+
         getDialog().setTitle("Please enter username");
 
         return view;
