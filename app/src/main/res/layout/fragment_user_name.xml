@@ -1,62 +1,86 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:padding="@dimen/dialog_fragment_padding"
+    android:scrollbars="none"
+    >
 
-    <TextView
-        android:id="@+id/lbl_your_name"
+    <LinearLayout
+        android:id="@+id/edit_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Peso:" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_fragment_space"
+            android:layout_gravity="center_horizontal" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/editText_current_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/current_weight"
+                android:imeOptions="actionUnspecified"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-    <TextView
-        android:id="@+id/lbl_percentual"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Peso:" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/percentual"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
-
-    <CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:id="@+id/calendarView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.35" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        tools:text="Save"
-        android:id="@+id/button_save"
-        android:layout_gravity="center_horizontal" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_fragment_space"
+            android:layout_gravity="center_horizontal" />
 
 
-</LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editText_current_percentage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/current_fat_percentage"
+                android:imeOptions="actionUnspecified"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_fragment_space"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_border"
+            android:drawableLeft="@drawable/content_save"
+            android:padding="@dimen/card_padding"
+            android:text="@string/button_save"
+            android:textColor="@android:color/white"
+            tools:text="Save" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_fragment_space"
+            android:layout_gravity="center_horizontal" />
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>

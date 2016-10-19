@@ -21,6 +21,7 @@ public class MainActivityFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     Button mDialogFragment;
 
+
     public MainActivityFragment() {
         // Required empty public constructor
     }
@@ -31,6 +32,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
 
 
         //Create the database
@@ -45,6 +47,7 @@ public class MainActivityFragment extends Fragment {
         Project project = new Project("Operation Raul", "2016-10-10", "2016-12-25");
         project.addProject(getActivity());
 
+
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recyclerView_users);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setHasFixedSize(true);
@@ -53,8 +56,11 @@ public class MainActivityFragment extends Fragment {
         rv.setAdapter(mAdapter);
 
 
+
         return view;
     }
+
+
 
 
 }

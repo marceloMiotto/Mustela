@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cardView_background_color_names">
+        <item>cardView_background_cyan</item>
+        <item>cardView_background_red</item>
+        <item>cardView_background_pink</item>
+        <item>cardView_background_purple</item>
+        <item>cardView_background_deep_purple</item>
+        <item>cardView_background_teal</item>
+        <item>cardView_background_green</item>
+        <item>cardView_background_orange</item>
+        <item>cardView_background_brown</item>
+    </string-array>
+
+</resources>

@@ -1,15 +1,22 @@
 <resources>
 
-    <string name="app_name">Mustela</string>
+    <string name="app_name" translatable="false">Mustela Fit</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detail">User Measures</string>
+    <string name="title_activity_detail"></string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_user_name">Name:</string>
+    <string name="current_weight">Weight</string>
+    <string name="current_fat_percentage">Fat Percentage</string>
+    <string name="button_save">Save</string>
+    <string name="measure_date">Date: %1$s</string>
+    <string name="measure_weight">Weight: %1$s</string>
+    <string name="measure_percentage">Fat Percentage: %1$s</string>
+    <string name="dialog_fragment_title">Please enter the measures</string>
+    <string name="header_project_title">Project Raul</string>
+    <string name="header_project_subtitle">#Metamorfose Ambulante</string>
 
 </resources>

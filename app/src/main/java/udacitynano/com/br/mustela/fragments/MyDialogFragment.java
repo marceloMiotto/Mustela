@@ -29,13 +29,13 @@ public class MyDialogFragment extends DialogFragment implements TextView.OnEdito
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_name, container);
-        mEditText = (EditText) view.findViewById(R.id.username);
+        mEditText = (EditText) view.findViewById(R.id.editText_current_weight);
 
         // set this instance as callback for editor action
         mEditText.setOnEditorActionListener(this);
         mEditText.requestFocus();
 
-        getDialog().setTitle("Please enter username");
+        getDialog().setTitle(getResources().getString(R.string.dialog_fragment_title));
 
         return view;
     }
