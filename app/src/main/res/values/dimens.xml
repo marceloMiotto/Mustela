@@ -19,6 +19,7 @@
     <dimen name="dialog_fragment_padding">20dp</dimen>
     <dimen name="dialog_fragment_space">10dp</dimen>
 
-    <dimen name="splash_circleImageView_width">116dp</dimen>
-    <dimen name="splash_circleImageView_height">100dp</dimen>
+    <dimen name="splash_circleImageView_width">166dp</dimen>
+    <dimen name="splash_circleImageView_height">150dp</dimen>
+    <dimen name="textSplashTitle">40sp</dimen>
 </resources>

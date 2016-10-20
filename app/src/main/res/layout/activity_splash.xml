@@ -12,6 +12,21 @@
 
     >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@dimen/textSplashTitle"
+        android:textColor="@android:color/white"
+        android:text="@string/app_name"
+        android:gravity="center"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="46dp" />
+
+
+
     <!-- progress -->
     <ProgressBar
         android:id="@+id/content_progress"
@@ -22,8 +37,9 @@
         android:gravity="center_horizontal"
         android:visibility="gone"
         tools:visibility="visible"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/imageView_user_photo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_user_photo"

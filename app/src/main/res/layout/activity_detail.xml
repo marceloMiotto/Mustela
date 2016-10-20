@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
         >
         ​
         <android.support.design.widget.CollapsingToolbarLayout
@@ -21,7 +22,8 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
-            app:layout_scrollFlags="scroll|snap"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+
             >
             ​
             <ImageView
@@ -36,8 +38,8 @@
         ​
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="146dp"
+            android:layout_height="146dp"
             android:layout_marginTop="-48dp"
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/ic_launcher"
@@ -45,6 +47,7 @@
             app:border_width="2dp"
             app:border_color="#FFF"
             app:layout_scrollFlags="scroll"
+            android:transitionName="@string/transition_user_photo"
             />
         ​
         <android.support.v7.widget.Toolbar
@@ -52,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="?colorPrimary"
             android:layout_marginTop="-48dp"
             app:theme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_scrollFlags="scroll|enterAlways|snap"
@@ -70,17 +72,16 @@
             >
             ​
             <TextView
-                android:id="@+id/textView_user_name"
+                android:id="@+id/textView_detail_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 tools:text="Marcelo"
-                android:text="Marcelo"
 
                 />
             ​
             <TextView
-                android:id="@+id/textView_user_fat"
+                android:id="@+id/textView_detail_user_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -88,11 +89,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 tools:text="Peso atual: "
                 android:textColor="@android:color/white"
-                android:text="Percentual de gordura: "
+                android:text="@string/detail_user_weight"
                 />
 
             <TextView
-                android:id="@+id/textView_fat_percentage"
+                android:id="@+id/textView_detail_fat_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -100,11 +101,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 tools:text="Percentual de gordura atual: "
                 android:textColor="@android:color/white"
-                android:text="Percentual de gordura atual: "
+                android:text="@string/detail_user_fat_percentage"
                 />
 
             <TextView
-                android:id="@+id/textView_fat_percentage_lost"
+                android:id="@+id/textView_detail_fat_percentage_lost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -112,7 +113,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 tools:text="Percentual de gordura perdido: "
                 android:textColor="@android:color/white"
-                android:text="Percentual de gordura perdido: "
+                android:text="@string/detail_fat_percentage_lost"
                 />
             ​
         </LinearLayout>

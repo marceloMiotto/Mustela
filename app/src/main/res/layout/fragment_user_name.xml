@@ -70,7 +70,9 @@
             android:padding="@dimen/card_padding"
             android:text="@string/button_save"
             android:textColor="@android:color/white"
-            tools:text="Save" />
+            tools:text="Save"
+            android:onClick="onClick"
+            />
 
         <Space
             android:layout_width="match_parent"

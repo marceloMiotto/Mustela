@@ -33,7 +33,7 @@ public class MeasureProvider extends ContentProvider {
                         MeasureContract.UserEntry.TABLE_NAME +
                         " ON " + MeasureContract.MeasureEntry.TABLE_NAME +
                         "." + MeasureContract.MeasureEntry.COLUMN_USER_KEY +
-                        " = " + MeasureContract.MeasureEntry.TABLE_NAME +
+                        " = " + MeasureContract.UserEntry.TABLE_NAME +
                         "." + MeasureContract.UserEntry._ID);
 
         sUsersQueryBuilder.setTables(MeasureContract.UserEntry.TABLE_NAME);

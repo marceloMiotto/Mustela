@@ -18,5 +18,11 @@
     <string name="dialog_fragment_title">Please enter the measures</string>
     <string name="header_project_title">Project Raul</string>
     <string name="header_project_subtitle">#Metamorfose Ambulante</string>
+    <string name="nav_item_project_title">Project</string>
+    <string name="nav_item_user_title">User</string>
+    <string name="detail_user_weight">Current Weight: %1$s</string>
+    <string name="detail_user_fat_percentage">Current Fat Percentage: %1$s</string>
+    <string name="detail_fat_percentage_lost">Fat percentage lost: %1$s</string>
+    <string name="transition_user_photo">transition_user_photo</string>
 
 </resources>

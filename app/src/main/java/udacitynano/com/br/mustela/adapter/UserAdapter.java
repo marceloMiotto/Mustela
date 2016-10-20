@@ -1,10 +1,14 @@
 package udacitynano.com.br.mustela.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import java.util.ArrayList;
 import udacitynano.com.br.mustela.DetailActivity;
 import udacitynano.com.br.mustela.R;
 import udacitynano.com.br.mustela.model.User;
+import udacitynano.com.br.mustela.util.Constant;
 import udacitynano.com.br.mustela.util.Util;
 
 
@@ -25,6 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.DataObjectHold
 
     private ArrayList<User> mUsers;
     private Context mContext;
+    private String mColorName;
 
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -32,6 +38,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.DataObjectHold
         TextView  userName;
         ImageView userPhoto;
         RelativeLayout relativeLayout;
+
 
 
         public DataObjectHolder(View itemView) {
@@ -49,7 +56,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.DataObjectHold
 
             User usr = mUsers.get(position);
             Intent intent = new Intent(mContext, DetailActivity.class);
-            mContext.startActivity(intent);
+            intent.putExtra(Constant.INTENT_USER_DETAIL,usr);
+            intent.putExtra(Constant.INTENT_USER_PROJECT,1);
+            Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext,userPhoto,userPhoto.getTransitionName()).toBundle();
+            mContext.startActivity(intent,bundle);
         }
     }
 
@@ -75,11 +85,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.DataObjectHold
         String[] cardViewBackgroundColor = res.getStringArray(R.array.cardView_background_color_names);
         Util util = new Util();
         int colorId = util.generateRandomNumber();
-        String colorName = cardViewBackgroundColor[colorId];
-        int aux = mContext.getResources().getIdentifier(colorName,"color",mContext.getPackageName());
-        holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext,mContext.getResources().getIdentifier(colorName,"color",mContext.getPackageName())));
+        mColorName = cardViewBackgroundColor[colorId];
+        Log.e("Debug","color name: "+mColorName);
+        holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext,mContext.getResources().getIdentifier(mColorName,"color",mContext.getPackageName())));
         holder.userName.setText(mUsers.get(position).getUserName());
-        holder.userPhoto.setImageResource(R.mipmap.ic_launcher);
+        mUsers.get(position).setColorName(mColorName);
+        holder.userPhoto.setImageDrawable(ContextCompat.getDrawable(mContext,mContext.getResources().getIdentifier(mUsers.get(position).getUserPhotoPath(),"drawable",mContext.getPackageName())));
     }
 
     public void addItem(User dataObj, int index) {

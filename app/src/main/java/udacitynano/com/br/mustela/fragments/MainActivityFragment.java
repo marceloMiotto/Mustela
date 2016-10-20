@@ -39,8 +39,8 @@ public class MainActivityFragment extends Fragment {
         Log.e("Debug", "Debug01");
 
         //Insert project and user (prototype only)
-        User user = new User("Susana", 1.73, 34, "");
-        User user1 = new User("Marcelo", 1.74, 42, "");
+        User user = new User("Susana", 1.73, 34, "susana",0,"");
+        User user1 = new User("Marcelo", 1.74, 42, "marcelo",0,"");
         user.addUser(getActivity());
         user1.addUser(getActivity());
 

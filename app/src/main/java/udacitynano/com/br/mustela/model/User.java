@@ -6,19 +6,23 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 import udacitynano.com.br.mustela.data.MeasureContract;
 
-public class User {
+public class User implements Parcelable {
 
     private Context mContext;
     private String userName;
     private double userHigh;
     private int userAge;
     private String userPhotoPath;
+    private long userId;
+    private String colorName;
 
     public User() {
     }
@@ -29,13 +33,77 @@ public class User {
     }
 
 
-    public User(String userName, double userHigh, int userAge, String userPhotoPath) {
+    private User(Parcel in) {
+        this.userName = in.readString();
+        this.userHigh = in.readDouble();
+        this.userAge = in.readInt();
+        this.userPhotoPath = in.readString();
+        this.userId = in.readLong();
+        this.colorName = in.readString();
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(userName);
+        dest.writeDouble(userHigh);
+        dest.writeInt(userAge);
+        dest.writeString(userPhotoPath);
+        dest.writeLong(userId);
+        dest.writeString(colorName);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+
+
+    public User(String userName, double userHigh, int userAge, String userPhotoPath, long userId, String colorName) {
         this.userName = userName;
         this.userHigh = userHigh;
         this.userAge = userAge;
         this.userPhotoPath = userPhotoPath;
+        this.userId = userId;
+        this.colorName = colorName;
     }
 
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;
@@ -71,13 +139,17 @@ public class User {
 
     public ArrayList<User> getUsers(){
         String name = "test";
+        String photoPath = "test";
+        long id = 0;
+
         ArrayList<User> users = new ArrayList<>();
 
         Log.e("Debug","uri: "+MeasureContract.UserEntry.CONTENT_URI);
 
         Cursor usersCursor = mContext.getContentResolver().query(
                 MeasureContract.UserEntry.CONTENT_URI,
-                new String[]{MeasureContract.UserEntry.COLUMN_NAME},
+                new String[]{MeasureContract.UserEntry.COLUMN_NAME,MeasureContract.UserEntry.COLUMN_PHOTO_PATH,
+                             MeasureContract.UserEntry._ID},
                 null,
                 null,
                 null);
@@ -88,8 +160,10 @@ public class User {
 
         do{
             name = usersCursor.getString(0);
-            users.add(new User(name,0.0,0,""));
-            Log.e("Debug","Debug06 cursor "+name);
+            photoPath = usersCursor.getString(1);
+            id        = usersCursor.getLong(2);
+            users.add(new User(name,0.0,0,photoPath,id,""));
+            Log.e("Debug","Debug06 cursor "+name + "photo "+photoPath + " id "+id);
         }while(usersCursor.moveToNext());
 
 
@@ -119,6 +193,7 @@ public class User {
 
             Log.e("Debug","Debug04 "+userName);
 
+            Log.e("Debug","Debug12 "+userPhotoPath);
             ContentValues userValues = new ContentValues();
 
             userValues.put(MeasureContract.UserEntry.COLUMN_NAME, userName);

@@ -7,8 +7,8 @@
     android:padding="@dimen/card_padding"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true"
-
-    >
+    android:background="?android:attr/selectableItemBackgroundBorderless"
+    tools:targetApi="lollipop">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_cardView"
@@ -30,7 +30,7 @@
             app:border_color="#FFF"
             app:layout_scrollFlags="scroll"
             android:layout_marginTop="@dimen/imageView_margin_top"
-
+            android:transitionName="@string/transition_user_photo"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/textView_user_name" />
 
