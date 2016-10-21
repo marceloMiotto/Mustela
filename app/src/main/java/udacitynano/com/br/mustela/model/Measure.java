@@ -97,31 +97,6 @@ public class Measure {
         this.measureFatPercentage = measureFatPercentage;
     }
 
-    public long addMeasure(Context context) {
-        long measureId;
-
-
-        ContentValues measureValues = new ContentValues();
-
-        measureValues.put(MeasureContract.MeasureEntry.COLUMN_PROJECT_KEY, measureProjectId);
-        measureValues.put(MeasureContract.MeasureEntry.COLUMN_USER_KEY, measureUserId);
-        measureValues.put(MeasureContract.MeasureEntry.COLUMN_DATE_TIME, measureDateTime);
-        measureValues.put(MeasureContract.MeasureEntry.COLUMN_WEIGHT, measureWeight);
-        measureValues.put(MeasureContract.MeasureEntry.COLUMN_FAT_PERCENTAGE, measureFatPercentage);
-
-        Uri insertedUri = context.getContentResolver().insert(
-                MeasureContract.MeasureEntry.CONTENT_URI,
-                measureValues
-        );
-
-
-        measureId = ContentUris.parseId(insertedUri);
-
-
-        return measureId;
-    }
-
-
     public ArrayList<Measure> getMeasures(long projectId, long userId){
         String dateTime = "test";
         double weight = 0;
@@ -138,7 +113,7 @@ public class Measure {
                             ,MeasureContract.MeasureEntry.COLUMN_FAT_PERCENTAGE,MeasureContract.MeasureEntry.TABLE_NAME+"."+MeasureContract.MeasureEntry._ID},
                 null,
                 null,
-                null);
+                MeasureContract.MeasureEntry.TABLE_NAME+"."+MeasureContract.MeasureEntry._ID +" desc ");
 
         Log.e("Debug","Debug03");
         measureCursor.moveToFirst();
@@ -165,6 +140,46 @@ public class Measure {
 
         return measures;
 
+    }
+
+    public long addMeasures(Context context, User user, String measureDateTime, String measureWeight, String measureFatPercentage) {
+        long measureId = 0;
+        int projectId =1; //TODO remove the hardcoded projectId
+
+        Cursor measureCursor = context.getContentResolver().query(
+                MeasureContract.ProjectEntry.CONTENT_URI,
+                new String[]{MeasureContract.ProjectEntry._ID},
+                MeasureContract.ProjectEntry._ID + " = ?",
+                new String[]{String.valueOf(projectId)},
+                null);
+
+        if (measureCursor.getCount() == 0) {
+
+            Log.e("Debug","Project does not exists");
+
+        }else {
+
+            ContentValues measureValues = new ContentValues();
+
+            measureValues.put(MeasureContract.MeasureEntry.COLUMN_PROJECT_KEY, projectId);
+            measureValues.put(MeasureContract.MeasureEntry.COLUMN_USER_KEY, user.getUserId());
+            measureValues.put(MeasureContract.MeasureEntry.COLUMN_DATE_TIME, measureDateTime);
+            measureValues.put(MeasureContract.MeasureEntry.COLUMN_WEIGHT, Double.valueOf(measureWeight));
+            measureValues.put(MeasureContract.MeasureEntry.COLUMN_FAT_PERCENTAGE, Double.valueOf(measureFatPercentage));
+
+            Uri insertedUri = context.getContentResolver().insert(
+                    MeasureContract.MeasureEntry.CONTENT_URI,
+                    measureValues
+            );
+
+
+            measureId = ContentUris.parseId(insertedUri);
+
+        }
+
+        measureCursor.close();
+
+        return measureId;
     }
 
 

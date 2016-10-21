@@ -18,6 +18,7 @@ public class MeasureProvider extends ContentProvider {
     static final int USER = 100;
     static final int PROJECT = 101;
     static final int MEASURE_BY_USER_PROJECT = 102;
+    static final int MEASURES = 103;
 
     private static final SQLiteQueryBuilder sMeasureByProjectUserQueryBuilder;
     private static final SQLiteQueryBuilder sUsersQueryBuilder;
@@ -121,6 +122,7 @@ public class MeasureProvider extends ContentProvider {
         // For each type of URI you want to add, create a corresponding code.
         matcher.addURI(authority, MeasureContract.PATH_USER, USER);
         matcher.addURI(authority, MeasureContract.PATH_PROJECT,PROJECT);
+        matcher.addURI(authority, MeasureContract.PATH_MEASURE,MEASURES);
         matcher.addURI(authority, MeasureContract.PATH_MEASURE + "/*/*", MEASURE_BY_USER_PROJECT);
 
         return matcher;
@@ -177,6 +179,8 @@ public class MeasureProvider extends ContentProvider {
 
                 case MEASURE_BY_USER_PROJECT:
                     return MeasureContract.MeasureEntry.CONTENT_ITEM_TYPE;
+                case MEASURES:
+                    return MeasureContract.MeasureEntry.CONTENT_TYPE;
                 default:
                     throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
@@ -207,6 +211,16 @@ public class MeasureProvider extends ContentProvider {
                     returnUri = MeasureContract.ProjectEntry.buildProjectUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+
+            case MEASURES: {
+                //normalizeDate(values);
+                long _id = sqLiteDatabase.insert(MeasureContract.MeasureEntry.TABLE_NAME, null, values);
+                if ( _id > 0 )
+                    returnUri = MeasureContract.MeasureEntry.buildMeasureUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert measure row into " + uri);
                 break;
             }
 

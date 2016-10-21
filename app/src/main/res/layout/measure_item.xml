@@ -8,6 +8,12 @@
 
     >
 
+    <Space
+        android:layout_width="5dp"
+        android:layout_height="@dimen/detail_recyclerView_height"
+
+         />
+
     <TextView
         android:id="@+id/textView_measure_date"
         android:layout_width="wrap_content"

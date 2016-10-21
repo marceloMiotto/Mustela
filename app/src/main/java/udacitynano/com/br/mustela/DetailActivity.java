@@ -1,5 +1,6 @@
 package udacitynano.com.br.mustela;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,13 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import udacitynano.com.br.mustela.fragments.MyDialogFragment;
 import udacitynano.com.br.mustela.model.User;
 import udacitynano.com.br.mustela.util.Constant;
 
-public class DetailActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener , MyDialogFragment.UserNameListener,View.OnClickListener {
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener,AppBarLayout.OnOffsetChangedListener {
+
 
     private static final int PERCENTAGE_TO_ANIMATE_AVATAR = 20;
     private boolean mIsAvatarShown = true;
@@ -33,6 +34,9 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
     TextView  mUserFatPercentageLost;
     LinearLayout linearLayout;
 
+    User user;
+    int  projectId;
+
     public static String DETAIL_VIEW = "DETAIL_VIEW";
 
     @Override
@@ -44,10 +48,29 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         AppBarLayout appbarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mProfileImage = (ImageView) findViewById(R.id.profile_image);
 
+
+        mUserPhoto  = (ImageView) findViewById(R.id.profile_image);
+        mUserName = (TextView) findViewById(R.id.textView_detail_user_name);
+        mUserWeight = (TextView) findViewById(R.id.textView_detail_user_weight);
+        mUserFatPercentage = (TextView) findViewById(R.id.textView_detail_fat_percentage);
+        mUserFatPercentageLost = (TextView) findViewById(R.id.textView_detail_fat_percentage_lost);
+        linearLayout = (LinearLayout)findViewById(R.id.title_container);
+
+        Bundle bundle = getIntent().getExtras();
+        user = bundle.getParcelable(Constant.INTENT_USER_DETAIL);
+        projectId = getIntent().getIntExtra(Constant.INTENT_USER_PROJECT,1);
+
+
+
+        mUserPhoto  = (ImageView) findViewById(R.id.profile_image);
+        mUserName = (TextView) findViewById(R.id.textView_detail_user_name);
+        mUserWeight = (TextView) findViewById(R.id.textView_detail_user_weight);
+        mUserFatPercentage = (TextView) findViewById(R.id.textView_detail_fat_percentage);
+        mUserFatPercentageLost = (TextView) findViewById(R.id.textView_detail_fat_percentage_lost);
+        linearLayout = (LinearLayout)findViewById(R.id.title_container);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,18 +78,6 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
                 onBackPressed();
             }
         });
-
-        mUserPhoto  = (ImageView) findViewById(R.id.profile_image);
-        mUserName = (TextView) findViewById(R.id.textView_detail_user_name);
-        mUserWeight = (TextView) findViewById(R.id.textView_detail_user_weight);
-        mUserFatPercentage = (TextView) findViewById(R.id.textView_detail_fat_percentage);
-        mUserFatPercentageLost = (TextView) findViewById(R.id.textView_detail_fat_percentage_lost);
-        linearLayout = (LinearLayout) findViewById(R.id.title_container);
-
-        Bundle bundle = getIntent().getExtras();
-        User user = bundle.getParcelable(Constant.INTENT_USER_DETAIL);
-        int  projectId = getIntent().getIntExtra(Constant.INTENT_USER_PROJECT,1);
-
 
         appbarLayout.addOnOffsetChangedListener(this);
         mMaxScrollSize = appbarLayout.getTotalScrollRange();
@@ -93,18 +104,19 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
                 }
 
                 MyDialogFragment editNameDialog = new MyDialogFragment();
+                editNameDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.e("Debug","funcionou o callback");
+
+                    }
+                });
                 editNameDialog.show(manager, "fragment_edit_name");
 
-
-                }
+            }
         });
 
 
-    }
-
-    @Override
-    public void onFinishUserDialog(String user) {
-        Toast.makeText(this, "Hello, " + user, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,4 +145,7 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
     public void onClick(View v) {
 
     }
+
+
+
 }

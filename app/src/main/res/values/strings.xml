@@ -24,5 +24,6 @@
     <string name="detail_user_fat_percentage">Current Fat Percentage: %1$s</string>
     <string name="detail_fat_percentage_lost">Fat percentage lost: %1$s</string>
     <string name="transition_user_photo">transition_user_photo</string>
+    <string name="date_format_mask">dd/MM/yyyy</string>
 
 </resources>

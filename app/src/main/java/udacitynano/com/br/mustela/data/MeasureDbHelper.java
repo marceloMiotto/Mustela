@@ -58,7 +58,7 @@ public class MeasureDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_MEASURE_TABLE);
 
-        Log.e("Debug","Debug02");
+        Log.e("Debug","Debug02 "+SQL_CREATE_MEASURE_TABLE);
 
     }
 
