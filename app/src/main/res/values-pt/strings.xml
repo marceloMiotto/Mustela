@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mustela Fit</string>
+    <string name="action_settings">Configurações</string>
+    <string name="button_save">Salvar</string>
+    <string name="current_fat_percentage">Percentual de Gordura</string>
+    <string name="current_weight">Peso</string>
+    <string name="date_format_mask">dd/MM/yyyy</string>
+    <string name="detail_fat_percentage_lost">Gordura Perdida: %1$s</string>
+    <string name="detail_user_fat_percentage">Percentual de Gordura Atual: %1$s</string>
+    <string name="detail_user_weight">Peso Atual: %1$s</string>
+    <string name="dialog_fragment_title">Informe as medidas</string>
+    <string name="header_project_subtitle">#Metamorfose Ambulante</string>
+    <string name="header_project_title">Projeto Raul</string>
+    <string name="label_user_name">Nome:</string>
+    <string name="measure_date">Data: %1$s</string>
+    <string name="measure_item_deleted">Medida Excluída</string>
+    <string name="measure_percentage">Percentual de Gordura: %1$s</string>
+    <string name="measure_weight">Peso: %1$s</string>
+    <string name="nav_item_project_title">Projeto</string>
+    <string name="nav_item_user_title">Usuário</string>
+    <string name="required_field">Campo Obrigatório %1$s</string>
+</resources>

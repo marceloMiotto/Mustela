@@ -26,6 +26,7 @@ public class DetailActivityFragment extends Fragment  implements View.OnClickLis
     RecyclerView rv;
 
 
+
     public DetailActivityFragment() {
     }
 
@@ -44,10 +45,13 @@ public class DetailActivityFragment extends Fragment  implements View.OnClickLis
         projectId = getActivity().getIntent().getIntExtra(Constant.INTENT_USER_PROJECT,1);
 
 
+
         rv = (RecyclerView) view.findViewById(R.id.recycler_view_measures);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setHasFixedSize(true);
         rv.addItemDecoration(new DividerItemDecoration(getActivity()));
+
+
 
         return view;
     }
@@ -65,6 +69,8 @@ public class DetailActivityFragment extends Fragment  implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+
+
 
     }
 }

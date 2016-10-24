@@ -139,7 +139,7 @@ public class MeasureProvider extends ContentProvider {
 
         if ( null == selection ) selection = "1";
         switch (match) {
-            case MEASURE_BY_USER_PROJECT:
+            case MEASURES:
                 rowsDeleted = sqLiteDatabase.delete(
                         MeasureContract.MeasureEntry.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -158,9 +158,9 @@ public class MeasureProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         // Because a null deletes all rows
-        if (rowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
+        //if (rowsDeleted != 0) {
+        //    getContext().getContentResolver().notifyChange(uri, null);
+       // }
         return rowsDeleted;
     }
 

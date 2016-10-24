@@ -142,6 +142,81 @@ public class Measure {
 
     }
 
+
+    public double getFatPercentageLost(ArrayList<Measure> measures){
+
+        double measure1 = 0;
+        double measure2 = 0;
+
+        if(measures.size() > 1) {
+             measure1 = (measures.get(0).getMeasureWeight() * measures.get(0).getMeasureFatPercentage()) / 100;
+             measure2 = (measures.get(1).getMeasureWeight() * measures.get(1).getMeasureFatPercentage()) / 100;
+             return Math.round((measure2 - measure1)*100)/100;
+        }else{
+            return 0;
+        }
+
+    }
+
+
+    public ArrayList<Measure> getLast2Measures(long projectId, long userId){
+        String dateTime = "test";
+        double weight = 0;
+        double fatPercentage = 0;
+        long id = 0;
+
+        ArrayList<Measure> measures = new ArrayList<>();
+
+        Log.e("Debug","uri: "+MeasureContract.MeasureEntry.CONTENT_URI);
+
+        Cursor measureCursor = mContext.getContentResolver().query(
+                Uri.parse(MeasureContract.MeasureEntry.CONTENT_URI+"/"+userId+"/"+projectId),
+                new String[]{MeasureContract.MeasureEntry.COLUMN_DATE_TIME, MeasureContract.MeasureEntry.COLUMN_WEIGHT
+                        ,MeasureContract.MeasureEntry.COLUMN_FAT_PERCENTAGE,MeasureContract.MeasureEntry.TABLE_NAME+"."+MeasureContract.MeasureEntry._ID},
+                null,
+                null,
+                MeasureContract.MeasureEntry.TABLE_NAME+"."+MeasureContract.MeasureEntry._ID +" desc ");
+
+        Log.e("Debug","Debug03");
+        measureCursor.moveToFirst();
+        Log.e("Debug","cursor size "+measureCursor.getCount());
+
+        if (measureCursor.getCount() != 0) {
+
+            int i =0;
+            do {
+                dateTime = measureCursor.getString(0);
+                weight = measureCursor.getDouble(1);
+                fatPercentage = measureCursor.getDouble(2);
+                id = measureCursor.getLong(3);
+
+                measures.add(new Measure(projectId, userId, dateTime, weight, fatPercentage, id));
+
+                Log.e("Debug", "Debug06 datetime " + dateTime + "weight " + weight + " fatPercentage " + fatPercentage + "id " + id);
+
+            } while ((measureCursor.moveToNext()) && ( i++ < 2 ));
+
+        }else{
+            measures.add(new Measure(projectId, userId, null, 0, 0, 0));
+        }
+
+        measureCursor.close();
+
+        return measures;
+
+    }
+
+
+    public int deleteMeasures(Context context,String projection, String[] projectionArgs){
+
+        int measureDeleted = context.getContentResolver().delete(
+                MeasureContract.MeasureEntry.CONTENT_URI,
+                projection,
+                projectionArgs
+              );
+        return measureDeleted;
+    }
+
     public long addMeasures(Context context, User user, String measureDateTime, String measureWeight, String measureFatPercentage) {
         long measureId = 0;
         int projectId =1; //TODO remove the hardcoded projectId

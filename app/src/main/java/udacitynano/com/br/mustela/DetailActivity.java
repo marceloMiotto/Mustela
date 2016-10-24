@@ -15,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import udacitynano.com.br.mustela.fragments.MyDialogFragment;
+import udacitynano.com.br.mustela.model.Measure;
 import udacitynano.com.br.mustela.model.User;
 import udacitynano.com.br.mustela.util.Constant;
 
@@ -33,6 +36,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView  mUserFatPercentage;
     TextView  mUserFatPercentageLost;
     LinearLayout linearLayout;
+
+    ArrayList<Measure> measures = new ArrayList<>();
 
     User user;
     int  projectId;
@@ -91,6 +96,15 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         toolbar.setBackgroundColor(ContextCompat.getColor(this,this.getResources().getIdentifier(user.getColorName(),"color",this.getPackageName())));
         appbarLayout.setBackgroundColor(ContextCompat.getColor(this,this.getResources().getIdentifier(user.getColorName(),"color",this.getPackageName())));
 
+        Measure msr = new Measure(this);
+        measures = msr.getLast2Measures(1,user.getUserId());//TODO remove hardcoded project id
+        if (measures.size() > 0) {
+            mUserWeight.setText(String.format(this.getString(R.string.detail_user_weight), String.valueOf(measures.get(0).getMeasureWeight())));
+            mUserFatPercentage.setText(String.format(this.getString(R.string.detail_user_fat_percentage), String.valueOf(measures.get(0).getMeasureFatPercentage())));
+            mUserFatPercentageLost.setText(String.format(this.getString(R.string.detail_fat_percentage_lost), String.valueOf(msr.getFatPercentageLost(measures))));
+        }
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +122,14 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         Log.e("Debug","funcionou o callback");
+
+                        Measure msr = new Measure(getApplication());
+                        measures = msr.getLast2Measures(1,user.getUserId());//TODO remove hardcoded project id
+                        if(measures.size() > 0) {
+                            mUserWeight.setText(String.format(getString(R.string.detail_user_weight), String.valueOf(measures.get(0).getMeasureWeight())));
+                            mUserFatPercentage.setText(String.format(getString(R.string.detail_user_fat_percentage), String.valueOf(measures.get(0).getMeasureFatPercentage())));
+                            mUserFatPercentageLost.setText(String.format(getString(R.string.detail_fat_percentage_lost), String.valueOf(msr.getFatPercentageLost(measures))));
+                        }
 
                     }
                 });

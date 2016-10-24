@@ -85,6 +85,14 @@ public class MyDialogFragment extends DialogFragment implements View.OnClickList
     public boolean saveMeasures() {
 
         Measure measure = new Measure();
+        if(mCurrentWeight.getText().toString().equals("")){
+            Toast.makeText(getActivity(),String.format(getString(R.string.required_field),getString(R.string.current_weight)),Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(mCurrentFatPercentage.getText().toString().equals("")){
+            Toast.makeText(getActivity(),String.format(getString(R.string.required_field),getString(R.string.current_fat_percentage)),Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String weight = mCurrentWeight.getText().toString();
         String fatPer = mCurrentFatPercentage.getText().toString();
         SimpleDateFormat sdf = new SimpleDateFormat(getActivity().getString(R.string.date_format_mask));
