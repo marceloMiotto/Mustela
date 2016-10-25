@@ -151,7 +151,7 @@ public class Measure {
         if(measures.size() > 1) {
              measure1 = (measures.get(0).getMeasureWeight() * measures.get(0).getMeasureFatPercentage()) / 100;
              measure2 = (measures.get(1).getMeasureWeight() * measures.get(1).getMeasureFatPercentage()) / 100;
-             return Math.round((measure2 - measure1)*100)/100;
+             return (measure2 - measure1)*1000;
         }else{
             return 0;
         }
