@@ -1,2 +1,2 @@
 # Mustela Fit
-App to track the measures of weight
+App to track the measures of weight. (Developing)
